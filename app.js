@@ -6,15 +6,15 @@ var lev = require('levenshtein'),
 
 console.log(lev('あああ', 'あいあ'));
 
-readBtCsv();
-
+var res = readBtCsv();
+var rs = null;
 function readBtCsv() {
-    var rs = fs.createReadStream('bt.csv')
+    rs = fs.createReadStream('bt.csv')
             .pipe(iconv.decodeStream('SJIS'))
             .pipe(iconv.encodeStream('UTF-8'))
             .pipe(csv.parse())
             .pipe(csv.transform(function(record){
                 return record;
             }));
-    console.log(rs);
+    rs.on('data', function(data) { console.log(data)} );
 }
